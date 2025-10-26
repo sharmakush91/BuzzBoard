@@ -1,26 +1,36 @@
 import React from "react";
 import styles from "./Header.module.css";
+import SearchIcon from "../Icons/SearchIcon";
+import HomeIcon from "../Icons/HomeIcon";
+import PopularIcon from "../Icons/PopularIcon";
+import ExploreIcon from "../Icons/ExploreIcon";
 
 export function Header() {
   return (
-    <div className={styles.searchBar}>
-      <input
-        type="text"
-        placeholder="Search Buzzboard"
-        className={styles.searchInput}
-      />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        className={styles.searchIcon}
-      >
-        <path
-          fillRule="evenodd"
-          d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-          clipRule="evenodd"
+    <>
+      <div className={styles.searchBar}>
+        <input
+          type="text"
+          placeholder="Search Buzzboard"
+          className={styles.searchInput}
         />
-      </svg>
-    </div>
+        <SearchIcon className={styles.searchIcon} />
+      </div>
+      <hr className={styles.navDivider} />
+      <div className={styles.navBar}>
+        <div className={styles.navItem}>
+          <HomeIcon className={styles.icon} />
+          <span>Home</span>
+        </div>
+        <div className={styles.navItem}>
+          <PopularIcon className={styles.icon} />
+          <span>Popular</span>
+        </div>
+        <div className={styles.navItem}>
+          <ExploreIcon className={styles.icon} />
+          <span>Explore</span>
+        </div>
+      </div>
+    </>
   );
 }

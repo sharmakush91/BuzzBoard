@@ -22,6 +22,43 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  fill: gray;
+  fill: rgb(0, 0, 0);
   pointer-events: none;
+}
+
+.navBar {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: 50px;
+  gap: 1rem;
+  width: 10%;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.navItem:hover {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+}
+
+.navDivider {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 0;
+  margin-top: 10px;
 }
