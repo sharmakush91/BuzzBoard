@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Post from "./Post";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts } from "./postsSlice";
+import styles from "./Postlist.module.css";
 
 export function Postlist() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export function Postlist() {
   }, [dispatch, status]);
 
   return (
-    <div>
+    <div className={styles.postContainer}>
       {posts.map((p) => (
         <Post key={p.data.id} post={p.data} />
       ))}

@@ -1,0 +1,39 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.image {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 2;
+  transition: background-color 0.2s;
+}
+
+.arrow:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}

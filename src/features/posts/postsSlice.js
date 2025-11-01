@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const posts = await fetch("https://www.reddit.com/r/all/hot.json");
+  const posts = await fetch("/api/r/all/hot.json");
   const data = await posts.json();
   console.log("Raw Reddit JSON:", data);
 
