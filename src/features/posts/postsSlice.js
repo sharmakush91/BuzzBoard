@@ -1,19 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const posts = await fetch("/api/r/all/hot.json");
-  const data = await posts.json();
-  console.log("Raw Reddit JSON:", data);
-
-  return data.data.children;
-});
-
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async (after = null) => {
+    const url = after
+      ? `/api/r/all/hot.json?after=${after}`
+      : `/api/r/all/hot.json`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    return {
+      posts: data.data.children,
+      after: data.data.after,
+    };
+  }
+);
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
     status: "idle",
     error: null,
+    after: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -23,7 +31,8 @@ const postsSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.posts = action.payload;
+        state.posts = [...state.posts, ...action.payload.posts];
+        state.after = action.payload.after;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";

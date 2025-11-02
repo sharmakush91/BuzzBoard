@@ -10,6 +10,7 @@ export function Postlist() {
   const posts = useSelector((state) => state.posts.posts);
   const error = useSelector((state) => state.posts.error);
   const status = useSelector((state) => state.posts.status);
+  const after = useSelector((state) => state.posts.after);
 
   useEffect(() => {
     if (status === "idle") {
@@ -17,11 +18,33 @@ export function Postlist() {
     }
   }, [dispatch, status]);
 
+  const isLoadingMore = status === "loading" && posts.length > 0;
+
+  if (status === "loading" && posts.length === 0) {
+    return <p className={styles.loadingPost}>Loading posts...</p>;
+  }
+
+  if (status === "failed" && posts.length === 0) {
+    return <p>{error}</p>;
+  }
+
   return (
     <div className={styles.postContainer}>
       {posts.map((p) => (
         <Post key={p.data.id} post={p.data} />
       ))}
+
+      {after && (
+        <div>
+          <button
+            type="button"
+            onClick={() => dispatch(fetchPosts(after))}
+            disabled={isLoadingMore}
+          >
+            {isLoadingMore ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
