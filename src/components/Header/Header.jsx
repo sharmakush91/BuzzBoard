@@ -4,6 +4,7 @@ import SearchIcon from "../Icons/SearchIcon";
 import HomeIcon from "../Icons/HomeIcon";
 import PopularIcon from "../Icons/PopularIcon";
 import ExploreIcon from "../Icons/ExploreIcon";
+import { Link } from "react-router-dom";
 
 export function Header() {
   return (
@@ -20,11 +21,15 @@ export function Header() {
       <div className={styles.navBar}>
         <div className={styles.navItem}>
           <HomeIcon className={styles.icon} />
-          <span>Home</span>
+          <Link to="/">
+            <span>Home</span>
+          </Link>
         </div>
         <div className={styles.navItem}>
           <PopularIcon className={styles.icon} />
-          <span>Popular</span>
+          <Link to="/popular">
+            <span>Popular</span>
+          </Link>
         </div>
         <div className={styles.navItem}>
           <ExploreIcon className={styles.icon} />

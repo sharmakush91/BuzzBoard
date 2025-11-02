@@ -14,9 +14,9 @@ export function Postlist() {
 
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchPosts());
+      dispatch(fetchPosts({ after, category: "hot" }));
     }
-  }, [dispatch, status]);
+  }, [dispatch, status, after]);
 
   const isLoadingMore = status === "loading" && posts.length > 0;
 
@@ -38,7 +38,7 @@ export function Postlist() {
         <div>
           <button
             type="button"
-            onClick={() => dispatch(fetchPosts(after))}
+            onClick={() => dispatch(fetchPosts({ after, category: "hot" }))}
             disabled={isLoadingMore}
           >
             {isLoadingMore ? "Loading..." : "Load More"}
