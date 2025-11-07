@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
-  async ({ after = null, category = "hot" }) => {
+  async ({ after = null, category }) => {
     const url = after
       ? `/api/r/all/${category}.json?after=${after}&limit=20`
       : `/api/r/all/${category}.json?limit=20`;
@@ -23,7 +23,14 @@ const postsSlice = createSlice({
     error: null,
     after: null,
   },
-  reducers: {},
+  reducers: {
+    clearPosts: (state) => {
+      state.posts = [];
+      state.after = null;
+      state.status = "idle";
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => {
@@ -42,3 +49,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
+export const { clearPosts } = postsSlice.actions;

@@ -3,6 +3,7 @@ import Post from "./Post";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts } from "./postsSlice";
 import styles from "./Postlist.module.css";
+import { clearPosts } from "./postsSlice";
 
 export function Postlist() {
   const dispatch = useDispatch();
@@ -13,15 +14,22 @@ export function Postlist() {
   const after = useSelector((state) => state.posts.after);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchPosts({ after, category: "hot" }));
-    }
-  }, [dispatch, status, after]);
+    dispatch(clearPosts());
+    dispatch(fetchPosts({ category: "hot" }));
+  }, [dispatch]);
 
   const isLoadingMore = status === "loading" && posts.length > 0;
 
   if (status === "loading" && posts.length === 0) {
-    return <p className={styles.loadingPost}>Loading posts...</p>;
+    return (
+      <img
+        src="/buzzboardLogo.svg"
+        alt="Logo"
+        width="100"
+        height="100"
+        className={styles.loadingPost}
+      />
+    );
   }
 
   if (status === "failed" && posts.length === 0) {
