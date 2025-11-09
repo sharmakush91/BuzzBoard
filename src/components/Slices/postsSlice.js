@@ -38,7 +38,15 @@ const postsSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.posts = [...state.posts, ...action.payload.posts];
+        state.posts = [
+          ...state.posts,
+          ...action.payload.posts.filter(
+            (newPost) =>
+              !state.posts.some(
+                (oldPost) => oldPost.data.id === newPost.data.id
+              )
+          ),
+        ];
         state.after = action.payload.after;
       })
       .addCase(fetchPosts.rejected, (state, action) => {

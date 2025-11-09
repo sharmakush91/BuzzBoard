@@ -33,7 +33,9 @@ export function Header() {
         </div>
         <div className={styles.navItem}>
           <ExploreIcon className={styles.icon} />
-          <span>Explore</span>
+          <Link to="/explore">
+            <span>Explore</span>
+          </Link>
         </div>
       </div>
     </>

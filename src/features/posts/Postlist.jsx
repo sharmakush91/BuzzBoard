@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Post from "./Post";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPosts } from "./postsSlice";
+import { fetchPosts } from "../../components/Slices/postsSlice";
 import styles from "./Postlist.module.css";
-import { clearPosts } from "./postsSlice";
+import { clearPosts } from "../../components/Slices/postsSlice";
 
 export function Postlist() {
   const dispatch = useDispatch();
