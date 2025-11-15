@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Post from "./Post";
+import Post from "./Homeposts";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts } from "../../components/Slices/postsSlice";
 import styles from "./Postlist.module.css";
@@ -46,6 +46,7 @@ export function Postlist() {
         <div>
           <button
             type="button"
+            className={styles.loadMore}
             onClick={() => dispatch(fetchPosts({ after, category: "hot" }))}
             disabled={isLoadingMore}
           >

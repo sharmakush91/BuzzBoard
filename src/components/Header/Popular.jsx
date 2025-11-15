@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearPosts, fetchPosts } from "../Slices/postsSlice";
-import Post from "../../features/posts/Post";
+import Post from "../../features//posts/Homeposts";
 import styles from "./Popular.module.css";
 
 export default function Popular() {
@@ -41,6 +41,7 @@ export default function Popular() {
       {after && (
         <div>
           <button
+            className={styles.loadMore}
             type="button"
             onClick={() => dispatch(fetchPosts({ after, category: "rising" }))}
             disabled={isLoadingMore}

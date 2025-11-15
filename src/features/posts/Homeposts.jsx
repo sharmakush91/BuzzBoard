@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Post.module.css";
+import styles from "./Homeposts.module.css";
 import Carousel from "./imageCarousel";
 
 export default function Post({ post }) {
@@ -9,10 +9,16 @@ export default function Post({ post }) {
     post.post_hint === "image" ||
     (post.url && (post.url.endsWith(".jpg") || post.url.endsWith(".png")));
 
-  const galleryImages = post.gallery_data?.items?.map((item) => {
-    const mediaId = item.media_id;
-    return post.media_metadata[mediaId].s.u.replace(/&amp;/g, "&");
-  });
+  const galleryImages = post.gallery_data?.items
+    ?.map((item) => {
+      const mediaId = item.media_id;
+      const media = post.media_metadata?.[mediaId]?.s?.u;
+      if (media) {
+        return media.replace(/&amp;/g, "&");
+      }
+      return null;
+    })
+    .filter(Boolean);
 
   return (
     <div className={styles.post}>

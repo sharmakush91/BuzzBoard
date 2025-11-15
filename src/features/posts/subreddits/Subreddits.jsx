@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Subreddits.module.css";
 
 export const Subreddits = function ({ post }) {
@@ -5,9 +6,16 @@ export const Subreddits = function ({ post }) {
     post.icon_img ||
     post.community_icon.split("?")[0] ||
     post.banner_img ||
-    "https://via.placeholder.com/40";
+    "https://placekitten.com/40/40";
+
+  const navigate = useNavigate();
+
+  const handleClick = function () {
+    navigate(`/r/${post.display_name}`);
+  };
+
   return (
-    <div className={styles.subRedditCard}>
+    <div className={styles.subRedditCard} onClick={handleClick}>
       <img
         src={imageUrl}
         alt={post.display_name}
