@@ -2,11 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchSubRedditPosts = createAsyncThunk(
   "posts/subRedditPosts",
-  async (subreddit) => {
-    const response = await fetch(`/api/r/${subreddit}/.json?limit=20`);
+  async ({ subreddit, after }) => {
+    const url = after
+      ? `/api/r/${subreddit}/.json?after=${after}&limit=20`
+      : `/api/r/${subreddit}/.json?limit=20`;
+    const response = await fetch(url);
     const data = await response.json();
     console.log(data);
-    return data.data.children;
+    return {
+      posts: data.data.children,
+      after: data.data.after,
+    };
   }
 );
 
@@ -16,6 +22,7 @@ const subRedditPostsSlice = createSlice({
     posts: [],
     status: "idle",
     error: null,
+    after: null,
   },
   reducers: {
     clearPosts: (state) => {
@@ -31,7 +38,8 @@ const subRedditPostsSlice = createSlice({
       })
       .addCase(fetchSubRedditPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.posts = action.payload;
+        state.posts = action.payload.posts;
+        state.after = action.payload.after;
       })
       .addCase(fetchSubRedditPosts.rejected, (state, action) => {
         state.status = "failed";

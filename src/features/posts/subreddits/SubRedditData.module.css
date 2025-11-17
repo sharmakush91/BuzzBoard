@@ -7,8 +7,11 @@
   width: 100%;
   max-width: 600px;
   height: fit-content;
-}
 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
 .postCard:hover {
   background-color: #f6f7f8;
   cursor: pointer;

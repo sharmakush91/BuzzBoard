@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Header.module.css";
-import SearchIcon from "../Icons/SearchIcon";
+import { SearchBar } from "../../features/SearchBar/SearchBar";
 import HomeIcon from "../Icons/HomeIcon";
 import PopularIcon from "../Icons/PopularIcon";
 import ExploreIcon from "../Icons/ExploreIcon";
@@ -9,14 +9,7 @@ import { Link } from "react-router-dom";
 export function Header() {
   return (
     <>
-      <div className={styles.searchBar}>
-        <input
-          type="text"
-          placeholder="Search Buzzboard"
-          className={styles.searchInput}
-        />
-        <SearchIcon className={styles.searchIcon} />
-      </div>
+      <SearchBar />
       <hr className={styles.navDivider} />
       <div className={styles.navBar}>
         <div className={styles.navItem}>
