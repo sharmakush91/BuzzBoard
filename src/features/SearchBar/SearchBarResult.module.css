@@ -1,5 +1,6 @@
 .resultItem:hover {
   background-color: #f6f7f8;
+  cursor: pointer;
 }
 
 .name {
