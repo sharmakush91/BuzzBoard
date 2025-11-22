@@ -5,6 +5,7 @@ import Explore from "./components/Header/Explore";
 import { SubRedditPosts } from "./features/posts/subreddits/subredditPosts";
 
 import { Routes, Route } from "react-router-dom";
+import { KeyDownSubredditResults } from "./features/SearchBar/KeyDownSubredditResults";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/popular" element={<Popular />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/r/:subRedditName" element={<SubRedditPosts />} />
+        <Route path="/search/:query" element={<KeyDownSubredditResults />} />
       </Routes>
     </div>
   );

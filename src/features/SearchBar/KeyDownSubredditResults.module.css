@@ -1,0 +1,69 @@
+/* Container for all subreddit cards */
+.subRedditGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Individual card */
+.subRedditCard {
+  flex: 0 0 220px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Hover effect */
+.subRedditCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon image */
+.subRedditIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+/* Card info */
+.subRedditInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+.subRedditTitle {
+  font-weight: bold;
+  margin: 0 0 4px 0;
+}
+
+/* Members */
+.subRedditMembers {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* Description with ellipsis after 3 lines */
+.subRedditDescription {
+  font-size: 0.875rem;
+  color: #444;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

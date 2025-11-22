@@ -6,14 +6,15 @@ import { fetchSearchSubreddits } from "../../components/Slices/searchSubredditsS
 import { clearResults } from "../../components/Slices/searchBarSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchBarResult } from "./SearchBarResult";
-import { KeyDownSubredditResults } from "./KeyDownSubredditResults";
+
+import { useNavigate } from "react-router-dom";
 
 export const SearchBar = function () {
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const [query, setQuery] = useState("");
   const posts = useSelector((state) => state.searchResults.results);
-  const results = useSelector((state) => state.subRedditsSearch.results);
+  const navigate = useNavigate();
   console.log(query);
 
   //Automatic fetch of subReddits based on user input
@@ -46,6 +47,8 @@ export const SearchBar = function () {
   const handleKeyDownResult = function (e) {
     if (e.key === "Enter") {
       dispatch(fetchSearchSubreddits({ query }));
+      dispatch(clearResults());
+      navigate(`/search/${query}`);
     }
   };
 
@@ -76,11 +79,6 @@ export const SearchBar = function () {
           ))}
         </ul>
       )}
-      {results.map((result) => {
-        return (
-          <KeyDownSubredditResults post={result.data} key={result.data.id} />
-        );
-      })}
     </div>
   );
 };
