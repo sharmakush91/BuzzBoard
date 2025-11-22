@@ -2,16 +2,21 @@ import { useEffect, useState, useRef } from "react";
 import SearchIcon from "../../components/Icons/SearchIcon";
 import styles from "./SearchBar.module.css";
 import { fetchSearchResults } from "../../components/Slices/searchBarSlice";
+import { fetchSearchSubreddits } from "../../components/Slices/searchSubredditsSlice";
 import { clearResults } from "../../components/Slices/searchBarSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchBarResult } from "./SearchBarResult";
+import { KeyDownSubredditResults } from "./KeyDownSubredditResults";
 
 export const SearchBar = function () {
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const [query, setQuery] = useState("");
   const posts = useSelector((state) => state.searchResults.results);
+  const results = useSelector((state) => state.subRedditsSearch.results);
   console.log(query);
+
+  //Automatic fetch of subReddits based on user input
 
   useEffect(() => {
     if (!query) return;
@@ -21,6 +26,8 @@ export const SearchBar = function () {
 
     return () => clearTimeout(timeout);
   }, [query, dispatch]);
+
+  //Handle closing of autosearch on clicking outside the container
 
   const handleClickOutside = function (e) {
     if (containerRef.current && !containerRef.current.contains(e.target))
@@ -33,6 +40,14 @@ export const SearchBar = function () {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  //HandleKeyDown results for subReddits
+
+  const handleKeyDownResult = function (e) {
+    if (e.key === "Enter") {
+      dispatch(fetchSearchSubreddits({ query }));
+    }
+  };
 
   return (
     <div className={styles.searchWrapper}>
@@ -48,6 +63,7 @@ export const SearchBar = function () {
               dispatch(clearResults());
             }
           }}
+          onKeyDown={handleKeyDownResult}
         />
       </label>
 
@@ -60,6 +76,11 @@ export const SearchBar = function () {
           ))}
         </ul>
       )}
+      {results.map((result) => {
+        return (
+          <KeyDownSubredditResults post={result.data} key={result.data.id} />
+        );
+      })}
     </div>
   );
 };

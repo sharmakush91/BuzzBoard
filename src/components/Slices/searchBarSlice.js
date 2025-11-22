@@ -12,7 +12,7 @@ export const fetchSearchResults = createAsyncThunk(
   }
 );
 
-export const fetchSearchResultsSlice = createSlice({
+export const searchResultSlice = createSlice({
   name: "search",
   initialState: {
     results: [],
@@ -40,5 +40,5 @@ export const fetchSearchResultsSlice = createSlice({
   },
 });
 
-export default fetchSearchResultsSlice.reducer;
-export const { clearResults } = fetchSearchResultsSlice.actions;
+export default searchResultSlice.reducer;
+export const { clearResults } = searchResultSlice.actions;
