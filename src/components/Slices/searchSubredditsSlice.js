@@ -1,33 +1,61 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSearchSubreddits = createAsyncThunk(
-  "fetchSearchSubreddits/searchResults",
-  async ({ query }) => {
-    const response = await fetch(
-      `/api/subreddits/search.json?q=${query}&limit=20`
-    );
+  "subRedditSearch/fetchSearchSubreddits",
+  async ({ query, after }) => {
+    const url = after
+      ? `/api/subreddits/search.json?q=${query}&after=${after}&limit=20`
+      : `/api/subreddits/search.json?q=${query}&limit=20`;
+
+    const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
-    return data.data;
+
+    return {
+      children: data.data.children,
+      after: data.data.after,
+    };
   }
 );
 
-const subRedditSearchResult = createSlice({
-  name: "subRedditSearchResult",
+const subRedditSearchSlice = createSlice({
+  name: "subRedditSearch",
   initialState: {
     results: [],
     status: "idle",
     error: null,
+    after: null,
   },
+
+  reducers: {
+    clearSubReddits: (state) => {
+      state.results = [];
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchSearchSubreddits.pending, (state) => {
-        state.status = "loading";
+        if (state.results.length === 0) {
+          state.status = "loading";
+        }
       })
+
       .addCase(fetchSearchSubreddits.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.results = action.payload.children;
+
+        state.results = [
+          ...state.results,
+          ...action.payload.children.filter(
+            (newItem) =>
+              !state.results.some(
+                (oldItem) => oldItem.data.id === newItem.data.id
+              )
+          ),
+        ];
+
+        state.after = action.payload.after;
       })
+
       .addCase(fetchSearchSubreddits.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
@@ -35,4 +63,5 @@ const subRedditSearchResult = createSlice({
   },
 });
 
-export default subRedditSearchResult.reducer;
+export default subRedditSearchSlice.reducer;
+export const { clearSubReddits } = subRedditSearchSlice.actions;

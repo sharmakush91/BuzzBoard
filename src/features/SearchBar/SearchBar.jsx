@@ -4,6 +4,7 @@ import styles from "./SearchBar.module.css";
 import { fetchSearchResults } from "../../components/Slices/searchBarSlice";
 import { fetchSearchSubreddits } from "../../components/Slices/searchSubredditsSlice";
 import { clearResults } from "../../components/Slices/searchBarSlice";
+import { clearSubReddits } from "../../components/Slices/searchSubredditsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchBarResult } from "./SearchBarResult";
 
@@ -48,6 +49,7 @@ export const SearchBar = function () {
     if (e.key === "Enter") {
       dispatch(fetchSearchSubreddits({ query }));
       dispatch(clearResults());
+      dispatch(clearSubReddits());
       navigate(`/search/${query}`);
     }
   };

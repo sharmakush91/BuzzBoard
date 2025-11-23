@@ -1,53 +1,82 @@
 import { useSelector } from "react-redux";
 import styles from "./KeyDownSubredditResults.module.css";
-import defaultIcon from "../../../public/buzzboardLogo.svg"; // your local default icon
+import { fetchSearchSubreddits } from "../../components/Slices/searchSubredditsSlice";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export const KeyDownSubredditResults = function () {
-  const results = useSelector((state) => state.subRedditsSearch.results || []);
+  const results = useSelector((state) => state.subRedditsSearch.results);
+  const error = useSelector((state) => state.subRedditsSearch.error);
+  const status = useSelector((state) => state.subRedditsSearch.status);
+  const isLoadingMore = status === "loading" && results.length > 0;
+  const after = useSelector((state) => state.subRedditsSearch.after);
+  const dispatch = useDispatch();
+  const { query } = useParams();
 
-  if (results.length === 0) return <p>No results found</p>;
-
-  const getValidIcon = (data) => {
-    // Prefer icon_img
-    let url = data.icon_img || data.community_icon || "";
-
-    // Clean HTML encoding
-    url = url.replace(/&amp;/g, "&");
-
-    // Some community_icon URLs have extra stuff after '?', strip it
-    url = url.split("?")[0];
-
-    // If URL is empty or points to a default blank image, use local fallback
-    if (!url || url.includes("default") || url.includes("emoji")) {
-      return defaultIcon;
-    }
-
-    return url;
+  const handleLoadMore = () => {
+    dispatch(fetchSearchSubreddits({ query, after }));
   };
 
+  if (status === "loading" && results.length === 0) {
+    return (
+      <img
+        src="/buzzboardLogo.svg"
+        alt="Logo"
+        width="100"
+        height="100"
+        className={styles.loadingPost}
+      />
+    );
+  }
+
+  if (status === "failed" && results.length === 0) {
+    return <p>{error}</p>;
+  }
+
   return (
-    <div className={styles.subRedditGrid}>
-      {results.map((result) => {
-        const data = result.data;
-        return (
-          <div className={styles.subRedditCard} key={data.id}>
-            <img
-              src={getValidIcon(data)}
-              alt={data.display_name}
-              className={styles.subRedditIcon}
-            />
-            <div className={styles.subRedditInfo}>
-              <h4 className={styles.subRedditTitle}>{data.title}</h4>
-              <span className={styles.subRedditMembers}>
-                {data.subscribers.toLocaleString()} members
-              </span>
-              <p className={styles.subRedditDescription}>
-                {data.public_description}
-              </p>
+    <>
+      <div className={styles.subRedditGrid}>
+        {results.map((result) => {
+          const data = result.data;
+
+          let iconUrl = data.icon_img || data.community_icon || "";
+          iconUrl = iconUrl.replace(/&amp;/g, "&").split("?")[0];
+
+          return (
+            <div className={styles.subRedditCard} key={data.id}>
+              <img
+                src={iconUrl || "/defaultIcon.png"}
+                alt={data.display_name}
+                className={styles.subRedditIcon}
+              />
+
+              <div className={styles.subRedditInfo}>
+                <h4 className={styles.subRedditTitle}>{data.title}</h4>
+
+                <span className={styles.subRedditMembers}>
+                  {data.subscribers?.toLocaleString() || 0} members
+                </span>
+
+                <p className={styles.subRedditDescription}>
+                  {data.public_description}
+                </p>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+      {after && results.length > 0 && (
+        <div>
+          <button
+            type="button"
+            className={styles.loadMore}
+            disabled={isLoadingMore}
+            onClick={handleLoadMore}
+          >
+            {isLoadingMore ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
