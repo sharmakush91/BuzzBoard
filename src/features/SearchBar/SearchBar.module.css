@@ -1,7 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
 .searchWrapper {
   position: relative;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
+  padding: 0 8px;
 }
 
 .searchBar {
@@ -12,8 +18,8 @@
 
 .searchInput {
   flex: 1;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 12px 12px;
+  border-radius: 10px;
   border: 1px solid #ccc;
 }
 

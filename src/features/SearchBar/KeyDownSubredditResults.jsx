@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import styles from "./KeyDownSubredditResults.module.css";
 import { fetchSearchSubreddits } from "../../components/Slices/searchSubredditsSlice";
+import { fetchSubRedditPosts } from "../../components/Slices/subRedditPostSlice";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const KeyDownSubredditResults = function () {
   const results = useSelector((state) => state.subRedditsSearch.results);
@@ -11,8 +12,13 @@ export const KeyDownSubredditResults = function () {
   const isLoadingMore = status === "loading" && results.length > 0;
   const after = useSelector((state) => state.subRedditsSearch.after);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { query } = useParams();
 
+  const handleClick = function () {
+    dispatch(fetchSubRedditPosts({ subreddit: query, after: null }));
+    navigate(`/r/${query}`);
+  };
   const handleLoadMore = () => {
     dispatch(fetchSearchSubreddits({ query, after }));
   };
@@ -43,7 +49,11 @@ export const KeyDownSubredditResults = function () {
           iconUrl = iconUrl.replace(/&amp;/g, "&").split("?")[0];
 
           return (
-            <div className={styles.subRedditCard} key={data.id}>
+            <div
+              className={styles.subRedditCard}
+              key={data.id}
+              onClick={handleClick}
+            >
               <img
                 src={iconUrl || "/defaultIcon.png"}
                 alt={data.display_name}
