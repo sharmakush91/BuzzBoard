@@ -3,6 +3,9 @@
   width: 100%;
   max-width: 600px;
   margin: auto;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .image {
@@ -24,6 +27,7 @@
   user-select: none;
   z-index: 2;
   transition: background-color 0.2s;
+  outline: none;
 }
 
 .arrow:hover {

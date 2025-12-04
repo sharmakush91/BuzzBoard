@@ -4,9 +4,6 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 8px 12px;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   word-break: break-word;
@@ -53,4 +50,10 @@
 .subRedditDescription {
   font-size: 0.875rem;
   color: #444;
+}
+
+@media (max-width: 768px) {
+  .subRedditCard {
+    width: 100%;
+  }
 }

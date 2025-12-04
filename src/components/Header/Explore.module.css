@@ -33,3 +33,9 @@
   box-shadow: 0 5px 12px rgba(62, 84, 180, 0.45);
   background: linear-gradient(135deg, #4f66d4, #00994f);
 }
+
+@media (max-width: 768px) {
+  .subRedditContainer {
+    display: grid;
+  }
+}
