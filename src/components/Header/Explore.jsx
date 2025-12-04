@@ -20,9 +20,10 @@ export default function Explore() {
       <img
         src="/buzzboardLogo.svg"
         alt="Logo"
-        width="100"
-        height="100"
+        width={100}
+        height={100}
         className={styles.loadingPost}
+        fetchPriority="high"
       />
     );
   }
