@@ -23,19 +23,6 @@ export const KeyDownSubredditResults = function () {
     dispatch(fetchSearchSubreddits({ query, after }));
   };
 
-  if (status === "loading" && results.length === 0) {
-    return (
-      <img
-        src="/buzzboardLogo.svg"
-        alt="Logo"
-        width={100}
-        height={100}
-        className={styles.loadingPost}
-        fetchPriority="high"
-      />
-    );
-  }
-
   if (status === "failed" && results.length === 0) {
     return <p>{error}</p>;
   }
