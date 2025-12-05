@@ -18,8 +18,6 @@ export const SearchBar = function () {
   const navigate = useNavigate();
   console.log(query);
 
-  //Automatic fetch of subReddits based on user input
-
   useEffect(() => {
     if (!query) return;
     const timeout = setTimeout(() => {

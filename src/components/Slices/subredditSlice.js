@@ -4,8 +4,8 @@ export const fetchSubreddits = createAsyncThunk(
   "subReddit/fetchsubreddits",
   async ({ after }) => {
     const url = after
-      ? `/api/subreddits/popular.json?after=${after}&limit=20`
-      : `/api/subreddits/popular.json?limit=20`;
+      ? `/.netlify/functions/redditProxy/subreddits/popular.json?after=${after}&limit=20`
+      : `/.netlify/functions/redditProxy/subreddits/popular.json?limit=20`;
     const response = await fetch(url);
     const data = await response.json();
     return data.data;

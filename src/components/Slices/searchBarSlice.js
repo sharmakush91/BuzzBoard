@@ -4,7 +4,7 @@ export const fetchSearchResults = createAsyncThunk(
   "search/fetchSearchResults",
   async (query) => {
     const response = await fetch(
-      `/api/api/subreddit_autocomplete_v2.json?query=${query}&limit=10`
+      `/.netlify/functions/redditProxy/api/subreddit_autocomplete_v2.json?query=${query}&limit=10`
     );
     const data = await response.json();
     console.log(data);

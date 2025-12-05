@@ -4,8 +4,8 @@ export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async ({ after = null, category }) => {
     const url = after
-      ? `/api/r/all/${category}.json?after=${after}&limit=20`
-      : `/api/r/all/${category}.json?limit=20`;
+      ? `/.netlify/functions/redditProxy/r/all/${category}.json?after=${after}&limit=20`
+      : `/.netlify/functions/redditProxy/r/all/${category}.json?limit=20`;
     const response = await fetch(url);
     const data = await response.json();
     return {
