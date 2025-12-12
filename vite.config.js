@@ -7,13 +7,4 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://www.reddit.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
 });
