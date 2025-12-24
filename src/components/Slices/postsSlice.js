@@ -4,7 +4,7 @@ export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async ({ after = null, category }) => {
     // Map "rising" (or "all") to safe Reddit endpoint
-    let safeCategory = category === "rising" ? "popular" : category;
+    let safeCategory = category === "rising" ? "top" : category;
 
     const url = after
       ? `/.netlify/functions/redditProxy/r/${safeCategory}.json?sort=rising&after=${after}&limit=20`
