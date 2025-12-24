@@ -3,23 +3,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async ({ after = null, category }) => {
-    // Map "rising" (or "all") to safe Reddit endpoint
-    let safeCategory = category === "rising" ? "top" : category;
-
     const url = after
-      ? `/.netlify/functions/redditProxy/r/${safeCategory}.json?sort=rising&after=${after}&limit=20`
-      : `/.netlify/functions/redditProxy/r/${safeCategory}.json?sort=rising&limit=20`;
-
+      ? `/.netlify/functions/redditProxy/r/all/${category}.json?after=${after}&limit=20`
+      : `/.netlify/functions/redditProxy/r/all/${category}.json?limit=20`;
     const response = await fetch(url);
     const data = await response.json();
-
     return {
       posts: data.data.children,
       after: data.data.after,
     };
   }
 );
-
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
